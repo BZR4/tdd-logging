@@ -33,7 +33,7 @@ class BookServiceTest {
     void saveBookTest() {
 
         // Cenario
-        Book book = new Book(null, "As aventuras", "Fulano", "987654321");
+        Book book = new Book("As aventuras", "Fulano", "987654321");
 
         Mockito.when(bookRepository.save(book))
                 .thenReturn(new Book().setId(1L).setTitle("As aventuras").setAuthor("Fulano").setIsbn("987654321"));

@@ -1,9 +1,14 @@
 package info.esdras.logging.api.dto;
 
+import javax.validation.constraints.NotEmpty;
+
 public class BookDTO {
     private Long id;
+    @NotEmpty
     private String title;
+    @NotEmpty
     private String author;
+    @NotEmpty
     private String isbn;
 
     public BookDTO(String title, String author, String isbn) {
