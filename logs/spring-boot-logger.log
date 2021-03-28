@@ -47,3 +47,13 @@
 2021-03-28 10:29:59,257 INFO org.springframework.web.servlet.FrameworkServlet [Test worker] Completed initialization in 3 ms
 2021-03-28 10:29:59,324 INFO org.springframework.boot.StartupInfoLogger [Test worker] Started BookControllerTest in 6.634 seconds (JVM running for 9.095)
 2021-03-28 10:30:00,436 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'
+2021-03-28 10:49:21,621 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.1.7.Final
+2021-03-28 10:49:21,835 INFO org.springframework.boot.StartupInfoLogger [Test worker] Starting BookControllerTest using Java 14.0.1 on Mac-mini-de-Esdras.local with PID 1528 (started by esdras in /Users/esdras/Downloads/logging)
+2021-03-28 10:49:21,854 DEBUG org.springframework.boot.StartupInfoLogger [Test worker] Running with Spring Boot v2.4.4, Spring v5.3.5
+2021-03-28 10:49:21,856 INFO org.springframework.boot.SpringApplication [Test worker] The following profiles are active: test
+2021-03-28 10:49:28,872 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [Test worker] Initializing ExecutorService 'applicationTaskExecutor'
+2021-03-28 10:49:30,144 INFO org.springframework.mock.web.MockServletContext [Test worker] Initializing Spring TestDispatcherServlet ''
+2021-03-28 10:49:30,145 INFO org.springframework.web.servlet.FrameworkServlet [Test worker] Initializing Servlet ''
+2021-03-28 10:49:30,153 INFO org.springframework.web.servlet.FrameworkServlet [Test worker] Completed initialization in 4 ms
+2021-03-28 10:49:30,256 INFO org.springframework.boot.StartupInfoLogger [Test worker] Started BookControllerTest in 10.655 seconds (JVM running for 15.29)
+2021-03-28 10:49:30,906 INFO org.springframework.scheduling.concurrent.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'

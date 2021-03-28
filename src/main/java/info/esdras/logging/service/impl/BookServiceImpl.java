@@ -1,6 +1,7 @@
 package info.esdras.logging.service.impl;
 
 import info.esdras.logging.api.dto.Book;
+import info.esdras.logging.exception.BusinessException;
 import info.esdras.logging.repository.BookRepository;
 import info.esdras.logging.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book save(Book book) {
+        if (repository.existsByIsbn(book.getIsbn())) {
+            throw new BusinessException("Isbn já cadastrado");
+        }
         return repository.save(book);
     }
 }
