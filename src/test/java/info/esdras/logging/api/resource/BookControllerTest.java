@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import info.esdras.logging.api.dto.Book;
 import info.esdras.logging.api.dto.BookDTO;
+import info.esdras.logging.exception.BusinessException;
 import info.esdras.logging.service.BookService;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,7 +44,7 @@ class BookControllerTest {
     @Test
     void createBookTest() throws Exception {
 
-        var bookDTO = new BookDTO("Meu livro", "Autor", "12345678");
+        var bookDTO = createNewBook();
 
         var savedBook = new Book().setId(1L)
                 .setTitle(bookDTO.getTitle())
@@ -68,6 +68,8 @@ class BookControllerTest {
                 .andExpect(jsonPath("isbn").value("12345678"));
     }
 
+
+
     @DisplayName("Deve lançar exceção ao criar livro com dados insuficientes")
     @Test
     void createInvalidBookTest() throws Exception {
@@ -82,5 +84,32 @@ class BookControllerTest {
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("errors", hasSize(3)));
+    }
+
+    @DisplayName("Develançar erro ao tentar cadastrar um livro com isbn já utilizado por outro.")
+    @Test
+    void createBookWIthDuplicatedIsbn() throws Exception {
+        BookDTO dto = createNewBook();
+        String json = new ObjectMapper().writeValueAsString(dto);
+        String errorMessage = "Isbn já cadastrado";
+
+        BDDMockito.given(bookService.save(Mockito.any(Book.class)))
+                .willThrow(new BusinessException(errorMessage));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(BOOK_API)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mockMvc.perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", hasSize(1)))
+                .andExpect(jsonPath("errors[0]").value(errorMessage));
+
+    }
+
+    private BookDTO createNewBook() {
+        return new BookDTO("Meu livro", "Autor", "12345678");
     }
 }

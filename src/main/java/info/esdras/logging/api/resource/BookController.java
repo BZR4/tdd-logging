@@ -3,6 +3,7 @@ package info.esdras.logging.api.resource;
 import info.esdras.logging.api.dto.Book;
 import info.esdras.logging.api.dto.BookDTO;
 import info.esdras.logging.api.exceptions.ApiErrors;
+import info.esdras.logging.exception.BusinessException;
 import info.esdras.logging.service.BookService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -38,5 +39,11 @@ public class BookController {
     public ApiErrors handleValidationExceptions(MethodArgumentNotValidException argumentNotValidException) {
         BindingResult bindingResult = argumentNotValidException.getBindingResult();
         return new ApiErrors(bindingResult);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErrors handleBusinessException(BusinessException businessException) {
+        return new ApiErrors(businessException);
     }
 }
